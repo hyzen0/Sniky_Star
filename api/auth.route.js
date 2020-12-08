@@ -5,11 +5,15 @@ const router = express.Router();
 const {
   registerController,
   activationController,
+  signinController,
 } = require("../controllers/auth.controller");
 
-const { validSign } = require("../helpers/valid");
+const { validSign, validLogin } = require("../helpers/valid");
 
 router.post("/register", validSign, registerController);
+
+router.post("/login", validLogin, signinController);
+
 router.post("/activation", activationController);
 
 module.exports = router;
