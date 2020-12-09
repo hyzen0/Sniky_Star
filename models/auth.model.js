@@ -37,22 +37,22 @@ const userScheama = new mongoose.Schema(
 // virtual
 userScheama
   .virtual("password")
-  .set(function (password) {
+  .set(password => {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encryptPassword(password);
   })
-  .get(function () {
+  .get(() => {
     return this._password;
   });
 
 // methods
 userScheama.methods = {
-  authenticate: function (plainText) {
+  authenticate: plainText => {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
 
-  encryptPassword: function (password) {
+  encryptPassword: password => {
     if (!password) return "";
     try {
       return crypto
@@ -64,7 +64,7 @@ userScheama.methods = {
     }
   },
 
-  makeSalt: function () {
+  makeSalt: () => {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
