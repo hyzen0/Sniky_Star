@@ -3,10 +3,10 @@ const morgan = require("morgan");
 const connectDB = require("./config/db");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const http = require("http");
-
-// Config dotev...
-require("dotenv").config();
+// Config dotev
+require("dotenv").config({
+  path: "./config/config.env",
+});
 
 const app = express();
 
@@ -16,9 +16,10 @@ connectDB();
 // body parser
 app.use(bodyParser.json());
 // Load routes
-const authRouter = require("./api/auth.route");
+const authRouter = require("./routes/auth.route");
+const userRouter = require("./routes/user.route");
 
-// Dev Logging Middleware
+// Dev Logginf Middleware
 if (process.env.NODE_ENV === "development") {
   app.use(
     cors({
@@ -30,20 +31,17 @@ if (process.env.NODE_ENV === "development") {
 
 // Use Routes
 app.use("/api", authRouter);
+app.use("/api", userRouter);
 
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    msg: "Page not found",
+    msg: "Page not founded",
   });
 });
 
 const PORT = process.env.PORT || 5000;
 
-const server = http.createServer(app);
-const SocketServer = require("./socket");
-SocketServer(server);
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

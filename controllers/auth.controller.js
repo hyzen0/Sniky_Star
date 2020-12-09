@@ -1,12 +1,13 @@
 const User = require("../models/auth.model");
 const _ = require("lodash");
+const { OAuth2Client } = require("google-auth-library");
+const fetch = require("node-fetch");
 
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 const sgMail = require("@sendgrid/mail");
-const expressJwt = require("express-jwt");
-const { OAuth2Client } = require("google-auth-library");
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.registerController = (req, res) => {
@@ -167,6 +168,27 @@ exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
 });
+
+exports.adminMiddleware = (req, res, next) => {
+  User.findById({
+    _id: req.user._id,
+  }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+
+    if (user.role !== "admin") {
+      return res.status(400).json({
+        error: "Admin resource. Access denied.",
+      });
+    }
+
+    req.profile = user;
+    next();
+  });
+};
 
 exports.forgotPasswordController = (req, res) => {
   const { email } = req.body;
