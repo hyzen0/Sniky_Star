@@ -9,6 +9,7 @@ const {
   forgotPasswordController,
   resetPasswordController,
   googleController,
+  facebookController,
 } = require("../controllers/auth.controller");
 
 const {

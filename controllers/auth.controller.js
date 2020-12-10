@@ -16,17 +16,13 @@ exports.registerController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
-      errors: firstError,
-    });
+    return res.status(422).json({ code: 422, msg: firstError });
   } else {
     User.findOne({
       email,
     }).exec((err, user) => {
       if (user) {
-        return res.status(400).json({
-          errors: "Email is taken",
-        });
+        return res.status(400).json({ code: 400, msg: "Email is taken" });
       }
     });
 
@@ -59,13 +55,13 @@ exports.registerController = (req, res) => {
       .send(emailData)
       .then(sent => {
         return res.json({
-          message: `An email has been sent to ${email}. Please check your Email.`,
+          msg: `An email has been sent to ${email}. Please check your Email.`,
         });
       })
       .catch(err => {
         return res.status(400).json({
-          success: false,
-          errors: errorHandler(err),
+          code: 400,
+          msg: errorHandler(err),
         });
       });
   }
@@ -79,7 +75,8 @@ exports.activationController = (req, res) => {
       if (err) {
         console.log("Activation error");
         return res.status(401).json({
-          errors: "Expired link. Signup again",
+          code: 401,
+          msg: "Expired link. Signup again",
         });
       } else {
         const { name, email, password } = jwt.decode(token);
@@ -95,14 +92,13 @@ exports.activationController = (req, res) => {
           if (err) {
             console.log("Save error", errorHandler(err));
             return res.status(401).json({
-              errors: errorHandler(err),
+              code: 401,
+              msg: errorHandler(err),
             });
           } else {
             return res.json({
-              success: true,
-              message: user,
-              message:
-                "Your account is now activated. Redirecting to login page ",
+              code: 200,
+              msg: user,
             });
           }
         });
@@ -110,7 +106,8 @@ exports.activationController = (req, res) => {
     });
   } else {
     return res.json({
-      message: "error happening please try again",
+      code: 400,
+      msg: "error happening please try again",
     });
   }
 };
@@ -121,7 +118,8 @@ exports.signinController = (req, res) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
     return res.status(422).json({
-      errors: firstError,
+      code: 422,
+      msg: firstError,
     });
   } else {
     // check if user exist
@@ -130,13 +128,15 @@ exports.signinController = (req, res) => {
     }).exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          errors: "No Account Found. Try Signing Up!",
+          code: 400,
+          msg: "No Account Found. Try Signing Up!",
         });
       }
       // authenticate
       if (!user.authenticate(password)) {
         return res.status(400).json({
-          errors: "Email and password do not match",
+          code: 400,
+          msg: "Email and password do not match",
         });
       }
       // generate a token and send to client
@@ -152,13 +152,8 @@ exports.signinController = (req, res) => {
       const { _id, name, email, role } = user;
 
       return res.json({
-        token,
-        user: {
-          _id,
-          name,
-          email,
-          role,
-        },
+        code: 200,
+        data: [token, user],
       });
     });
   }
@@ -175,13 +170,15 @@ exports.adminMiddleware = (req, res, next) => {
   }).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        error: "User not found",
+        code: 400,
+        msg: "User not found",
       });
     }
 
     if (user.role !== "admin") {
       return res.status(400).json({
-        error: "Admin resource. Access denied.",
+        code: 400,
+        msg: "Admin resource. Access denied.",
       });
     }
 
@@ -197,7 +194,8 @@ exports.forgotPasswordController = (req, res) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
     return res.status(422).json({
-      errors: firstError,
+      code: 422,
+      msg: firstError,
     });
   } else {
     User.findOne(
@@ -207,7 +205,8 @@ exports.forgotPasswordController = (req, res) => {
       (err, user) => {
         if (err || !user) {
           return res.status(400).json({
-            errors: "No Account Found. Try Signing Up!",
+            code: 400,
+            msg: "No Account Found. Try Signing Up!",
           });
         }
 
@@ -242,7 +241,8 @@ exports.forgotPasswordController = (req, res) => {
             if (err) {
               console.log("RESET PASSWORD LINK ERROR", err);
               return res.status(400).json({
-                errors:
+                code: 400,
+                msg:
                   "Database connection error on user password forgot request.",
               });
             } else {
@@ -251,13 +251,15 @@ exports.forgotPasswordController = (req, res) => {
                 .then(sent => {
                   // console.log('SIGNUP EMAIL SENT', sent)
                   return res.json({
-                    message: `Password reset link has been sent to ${email}. Follow the instruction to reset your password.`,
+                    code: 200,
+                    msg: `Password reset link has been sent to ${email}. Follow the instruction to reset your password.`,
                   });
                 })
                 .catch(err => {
                   // console.log('SIGNUP EMAIL SENT ERROR', err)
                   return res.json({
-                    message: err.message,
+                    code: 400,
+                    msg: err.message,
                   });
                 });
             }
@@ -276,7 +278,8 @@ exports.resetPasswordController = (req, res) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
     return res.status(422).json({
-      errors: firstError,
+      code: 422,
+      msg: firstError,
     });
   } else {
     if (resetPasswordLink) {
@@ -286,7 +289,8 @@ exports.resetPasswordController = (req, res) => {
         function (err, decoded) {
           if (err) {
             return res.status(400).json({
-              errors: "Expired link. Try again",
+              code: 400,
+              msg: "Expired link. Try again",
             });
           }
 
@@ -297,7 +301,8 @@ exports.resetPasswordController = (req, res) => {
             (err, user) => {
               if (err || !user) {
                 return res.status(400).json({
-                  errors: "Something went wrong. Try again later!",
+                  code: 400,
+                  msg: "Something went wrong. Try again later!",
                 });
               }
 
@@ -311,11 +316,13 @@ exports.resetPasswordController = (req, res) => {
               user.save((err, result) => {
                 if (err) {
                   return res.status(400).json({
-                    errors: "Error resetting user password.",
+                    code: 400,
+                    msg: "Error resetting user password.",
                   });
                 }
                 res.json({
-                  message:
+                  code: 200,
+                  msg:
                     "Your password is now updated. Redirecting to login page ",
                 });
               });
@@ -377,4 +384,60 @@ exports.googleController = (req, res) => {
         });
       }
     });
+};
+
+exports.facebookController = (req, res) => {
+  console.log("FACEBOOK LOGIN REQ BODY", req.body);
+  const { userID, accessToken } = req.body;
+
+  const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+
+  return (
+    fetch(url, {
+      method: "GET",
+    })
+      .then(response => response.json())
+      // .then(response => console.log(response))
+      .then(response => {
+        const { email, name } = response;
+        User.findOne({ email }).exec((err, user) => {
+          if (user) {
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+              expiresIn: "7d",
+            });
+            const { _id, email, name, role } = user;
+            return res.json({
+              token,
+              user: { _id, email, name, role },
+            });
+          } else {
+            let password = email + process.env.JWT_SECRET;
+            user = new User({ name, email, password });
+            user.save((err, data) => {
+              if (err) {
+                console.log("ERROR FACEBOOK LOGIN ON USER SAVE", err);
+                return res.status(400).json({
+                  error: "User signup failed with facebook",
+                });
+              }
+              const token = jwt.sign(
+                { _id: data._id },
+                process.env.JWT_SECRET,
+                { expiresIn: "7d" }
+              );
+              const { _id, email, name, role } = data;
+              return res.json({
+                token,
+                user: { _id, email, name, role },
+              });
+            });
+          }
+        });
+      })
+      .catch(error => {
+        res.json({
+          error: "Facebook login failed. Try later",
+        });
+      })
+  );
 };
