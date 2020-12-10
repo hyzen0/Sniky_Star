@@ -153,6 +153,7 @@ exports.signinController = (req, res) => {
 
       return res.json({
         code: 200,
+        msg: "success",
         data: [token, user],
       });
     });
