@@ -37,7 +37,7 @@ app.use("/api", userRouter);
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    msg: "Page not founded",
+    msg: "Page not found",
   });
 });
 
