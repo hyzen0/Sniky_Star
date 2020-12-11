@@ -16,13 +16,13 @@ exports.registerController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({ code: 422, msg: firstError });
+    return res.json({ code: 422, msg: firstError });
   } else {
     User.findOne({
       email,
     }).exec((err, user) => {
       if (user) {
-        return res.status(400).json({ code: 400, msg: "Email is taken" });
+        return res.json({ code: 400, msg: "Email is taken" });
       }
     });
 
@@ -59,7 +59,7 @@ exports.registerController = (req, res) => {
         });
       })
       .catch(err => {
-        return res.status(400).json({
+        return res.json({
           code: 400,
           msg: errorHandler(err),
         });
@@ -74,7 +74,7 @@ exports.activationController = (req, res) => {
     jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
       if (err) {
         console.log("Activation error");
-        return res.status(401).json({
+        return res.json({
           code: 401,
           msg: "Expired link. Signup again",
         });
@@ -91,7 +91,7 @@ exports.activationController = (req, res) => {
         user.save((err, user) => {
           if (err) {
             console.log("Save error", errorHandler(err));
-            return res.status(401).json({
+            return res.json({
               code: 401,
               msg: errorHandler(err),
             });
@@ -117,7 +117,7 @@ exports.signinController = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
+    return res.json({
       code: 422,
       msg: firstError,
     });
@@ -127,14 +127,14 @@ exports.signinController = (req, res) => {
       email,
     }).exec((err, user) => {
       if (err || !user) {
-        return res.status(400).json({
+        return res.json({
           code: 400,
           msg: "No Account Found. Try Signing Up!",
         });
       }
       // authenticate
       if (!user.authenticate(password)) {
-        return res.status(400).json({
+        return res.json({
           code: 400,
           msg: "Email and password do not match",
         });
@@ -171,14 +171,14 @@ exports.adminMiddleware = (req, res, next) => {
     _id: req.user._id,
   }).exec((err, user) => {
     if (err || !user) {
-      return res.status(400).json({
+      return res.json({
         code: 400,
         msg: "User not found",
       });
     }
 
     if (user.role !== "admin") {
-      return res.status(400).json({
+      return res.json({
         code: 400,
         msg: "Admin resource. Access denied.",
       });
@@ -195,7 +195,7 @@ exports.forgotPasswordController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
+    return res.json({
       code: 422,
       msg: firstError,
     });
@@ -206,7 +206,7 @@ exports.forgotPasswordController = (req, res) => {
       },
       (err, user) => {
         if (err || !user) {
-          return res.status(400).json({
+          return res.json({
             code: 400,
             msg: "No Account Found. Try Signing Up!",
           });
@@ -242,7 +242,7 @@ exports.forgotPasswordController = (req, res) => {
           (err, success) => {
             if (err) {
               console.log("RESET PASSWORD LINK ERROR", err);
-              return res.status(400).json({
+              return res.json({
                 code: 400,
                 msg:
                   "Database connection error on user password forgot request.",
@@ -279,7 +279,7 @@ exports.resetPasswordController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
+    return res.json({
       code: 422,
       msg: firstError,
     });
@@ -290,7 +290,7 @@ exports.resetPasswordController = (req, res) => {
         process.env.JWT_RESET_PASSWORD,
         function (err, decoded) {
           if (err) {
-            return res.status(400).json({
+            return res.json({
               code: 400,
               msg: "Expired link. Try again",
             });
@@ -302,7 +302,7 @@ exports.resetPasswordController = (req, res) => {
             },
             (err, user) => {
               if (err || !user) {
-                return res.status(400).json({
+                return res.json({
                   code: 400,
                   msg: "Something went wrong. Try again later!",
                 });
@@ -317,7 +317,7 @@ exports.resetPasswordController = (req, res) => {
 
               user.save((err, result) => {
                 if (err) {
-                  return res.status(400).json({
+                  return res.json({
                     code: 400,
                     msg: "Error resetting user password.",
                   });
@@ -354,8 +354,10 @@ exports.googleController = (req, res) => {
             });
             const { _id, email, name, role } = user;
             return res.json({
-              token,
-              user: { _id, email, name, role },
+              code: 200,
+              msg: "success",
+              token: token,
+              data: [user],
             });
           } else {
             let password = email + process.env.JWT_SECRET;
@@ -363,8 +365,9 @@ exports.googleController = (req, res) => {
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR GOOGLE LOGIN ON USER SAVE", err);
-                return res.status(400).json({
-                  error: "User signup failed with google",
+                return res.json({
+                  code: 400,
+                  msg: "User signup failed with google",
                 });
               }
               const token = jwt.sign(
@@ -374,16 +377,16 @@ exports.googleController = (req, res) => {
               );
               const { _id, email, name, role } = data;
               return res.json({
-                token,
-                user: { _id, email, name, role },
+                code: 200,
+                msg: "success",
+                token: token,
+                data: [data],
               });
             });
           }
         });
       } else {
-        return res.status(400).json({
-          error: "Google login failed. Try again",
-        });
+        return res.json({ code: 400, msg: "Google login failed. Try again" });
       }
     });
 };
@@ -408,18 +411,16 @@ exports.facebookController = (req, res) => {
               expiresIn: "7d",
             });
             const { _id, email, name, role } = user;
-            return res.json({
-              token,
-              user: { _id, email, name, role },
-            });
+            return res.json({ code: 200, token: token, data: [user] });
           } else {
             let password = email + process.env.JWT_SECRET;
             user = new User({ name, email, password });
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR FACEBOOK LOGIN ON USER SAVE", err);
-                return res.status(400).json({
-                  error: "User signup failed with facebook",
+                return res.json({
+                  code: 400,
+                  msg: "User signup failed with facebook",
                 });
               }
               const token = jwt.sign(
@@ -428,18 +429,13 @@ exports.facebookController = (req, res) => {
                 { expiresIn: "7d" }
               );
               const { _id, email, name, role } = data;
-              return res.json({
-                token,
-                user: { _id, email, name, role },
-              });
+              return res.json({ code: 200, token: token, data: [data] });
             });
           }
         });
       })
       .catch(error => {
-        res.json({
-          error: "Facebook login failed. Try later",
-        });
+        res.json({ code: 400, msg: "Facebook login failed. Try later" });
       })
   );
 };
