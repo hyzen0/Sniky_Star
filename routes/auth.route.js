@@ -1,6 +1,7 @@
 const User = require("../models/auth.model");
 const express = require("express");
 const router = express.Router();
+const { errorHandler } = require("../helpers/dbErrorHandling");
 const Nexmo = require("nexmo");
 const nexmo = new Nexmo({
   apiKey: "a54a75f4",
@@ -29,7 +30,7 @@ const {
 
 router.post("/register", validSign, registerController);
 
-router.post("/login", validLogin, signinController);
+router.post("/login", signinController);
 
 router.post("/activation", activationController);
 
@@ -127,7 +128,8 @@ router.post("/getinfo", (req, res) => {
           } else {
             return res.json({
               code: 200,
-              data: user,
+              msg: "success",
+              data: [user],
             });
           }
         });

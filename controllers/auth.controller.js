@@ -113,7 +113,7 @@ exports.activationController = (req, res) => {
 };
 
 exports.signinController = (req, res) => {
-  const { email, password } = req.body;
+  const { email, number, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
@@ -123,41 +123,80 @@ exports.signinController = (req, res) => {
     });
   } else {
     // check if user exist
-    User.findOne({
-      email,
-    }).exec((err, user) => {
-      if (err || !user) {
-        return res.json({
-          code: 400,
-          msg: "No Account Found. Try Signing Up!",
-        });
-      }
-      // authenticate
-      if (!user.authenticate(password)) {
-        return res.json({
-          code: 400,
-          msg: "Email and password do not match",
-        });
-      }
-      // generate a token and send to client
-      const token = jwt.sign(
-        {
-          _id: user._id,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "7d",
+    if (email) {
+      User.findOne({
+        email,
+      }).exec((err, user) => {
+        if (err || !user) {
+          return res.json({
+            code: 400,
+            msg: "No Account Found. Try Signing Up!",
+          });
         }
-      );
-      const { _id, name, email, role } = user;
+        // authenticate
+        if (!user.authenticate(password)) {
+          return res.json({
+            code: 400,
+            msg: "Email and password do not match",
+          });
+        }
+        // generate a token and send to client
+        const token = jwt.sign(
+          {
+            _id: user._id,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "7d",
+          }
+        );
+        const { _id, name, email, role } = user;
 
-      return res.json({
-        code: 200,
-        msg: "success",
-        token: token,
-        data: [user],
+        return res.json({
+          code: 200,
+          msg: "success",
+          token: token,
+          data: [user],
+        });
       });
-    });
+    }
+    if (number) {
+      User.findOne({
+        number,
+      }).exec((err, user) => {
+        if (err || !user) {
+          return res.json({
+            code: 400,
+            msg: "No Account Found. Try Signing Up!",
+          });
+        }
+        // authenticate
+        if (!user.authenticate(password)) {
+          return res.json({
+            code: 400,
+            msg: "Number and password do not match",
+          });
+        }
+        // generate a token and send to client
+        const token = jwt.sign(
+          {
+            _id: user._id,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "7d",
+          }
+        );
+        const { _id, name, number, role } = user;
+
+        return res.json({
+          code: 200,
+          msg: "success",
+          token: token,
+          data: [user],
+        });
+      });
+    }
   }
 };
 
