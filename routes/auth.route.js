@@ -134,7 +134,10 @@ router.post("/getinfo", (req, res) => {
       }
     });
   } else {
-    return res.json(Verified);
+    return res.json({
+      code: 400,
+      msg: "User is not Verified",
+    });
   }
 });
 
