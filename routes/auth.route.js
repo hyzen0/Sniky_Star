@@ -1,6 +1,5 @@
 const User = require("../models/auth.model");
 const express = require("express");
-const { identity } = require("lodash");
 const router = express.Router();
 const Nexmo = require("nexmo");
 const nexmo = new Nexmo({
@@ -128,7 +127,7 @@ router.post("/getinfo", (req, res) => {
           } else {
             return res.json({
               code: 200,
-              msg: user,
+              data: user,
             });
           }
         });
