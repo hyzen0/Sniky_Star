@@ -1,3 +1,4 @@
+const User = require("../models/auth.model");
 const express = require("express");
 const { identity } = require("lodash");
 const router = express.Router();
@@ -7,6 +8,8 @@ const nexmo = new Nexmo({
   apiKey: "a54a75f4",
   apiSecret: "KqTuwzPkj9WmM9Ct",
 });
+let reqId;
+let Verified = false;
 
 // Load Controllers
 const {
@@ -45,7 +48,7 @@ router.put("/resetpassword", resetPasswordValidator, resetPasswordController);
 router.post("/googlelogin", googleController);
 router.post("/facebooklogin", facebookController);
 
-router.post("/sendOtp", (req, res) => {
+router.post("/sendotp", (req, res) => {
   nexmo.verify.request(
     {
       number: "91" + req.body.number,
@@ -80,25 +83,50 @@ router.post("/verifyOtp", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        return res.json({
-          code: 400,
-          msg: err,
-        });
+        res.end("error: ", err);
       } else {
         if (result.status === "0") {
-          return res.json({
-            code: 200,
-            msg: "Verified",
-          });
-        } else {
-          return res.json({
-            code: 400,
-            msg: "Failed",
-          });
-        }
+          Verified = true;
+          res.end("verified");
+        } else res.end("failed");
       }
     }
   );
+});
+
+router.post("/getinfo", (req, res) => {
+  const { name, number, password } = req.body;
+  if (Verified) {
+    User.findOne({
+      number,
+    }).exec((err, user) => {
+      if (user) {
+        return res.json({ code: 400, msg: "Number is already Registerd" });
+      } else {
+        const user = new User({
+          name,
+          number,
+          password,
+        });
+        user.save((err, user) => {
+          if (err) {
+            console.log("Save error", errorHandler(err));
+            return res.json({
+              code: 401,
+              msg: errorHandler(err),
+            });
+          } else {
+            return res.json({
+              code: 200,
+              msg: user,
+            });
+          }
+        });
+      }
+    });
+  } else {
+    return res.json(Verified);
+  }
 });
 
 module.exports = router;
