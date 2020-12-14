@@ -2,7 +2,6 @@ const User = require("../models/auth.model");
 const express = require("express");
 const { identity } = require("lodash");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 const Nexmo = require("nexmo");
 const nexmo = new Nexmo({
   apiKey: "a54a75f4",
@@ -83,12 +82,23 @@ router.post("/verifyOtp", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.end("error: ", err);
+        return res.json({
+          code: 400,
+          msg: "failed",
+        });
       } else {
         if (result.status === "0") {
           Verified = true;
-          res.end("verified");
-        } else res.end("failed");
+          return res.json({
+            code: 200,
+            msg: "Verified",
+          });
+        } else {
+          res.json({
+            code: 400,
+            msg: "Failed",
+          });
+        }
       }
     }
   );
