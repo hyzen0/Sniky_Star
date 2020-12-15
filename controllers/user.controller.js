@@ -16,7 +16,7 @@ exports.readController = (req, res) => {
 
 exports.updateController = (req, res) => {
   // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-  const { name, password } = req.body;
+  const { username, password } = req.body;
 
   User.findOne({ _id: req.user._id }, (err, user) => {
     if (err || !user) {
@@ -24,12 +24,12 @@ exports.updateController = (req, res) => {
         error: "User not found",
       });
     }
-    if (!name) {
+    if (!username) {
       return res.status(400).json({
-        error: "Name is required",
+        error: "username is required",
       });
     } else {
-      user.name = name;
+      user.username = username;
     }
 
     if (password) {

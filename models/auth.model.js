@@ -10,14 +10,17 @@ const userScheama = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     number: {
       type: String,
     },
     name: {
       type: String,
       trim: true,
-      required: true,
-      default: "hyzen",
     },
     hashed_password: {
       type: String,
@@ -32,30 +35,6 @@ const userScheama = new mongoose.Schema(
       data: String,
       default: "",
     },
-    Photo: {
-      type: Buffer,
-    },
-    PhotoType: {
-      type: String,
-    },
-    Followers: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
-    Following: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
-    Bookmarks: [
-      {
-        type: ObjectId,
-        ref: "Post",
-      },
-    ],
   },
   {
     timestamps: true,

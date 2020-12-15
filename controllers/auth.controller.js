@@ -9,105 +9,87 @@ const expressJwt = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.MAIL_KEY);
+const generateOTP = () => {
+  var digits = "0123456789";
+  var otpLength = 6;
+  var otp = "";
+  for (let i = 1; i <= otpLength; i++) {
+    var index = Math.floor(Math.random() * digits.length);
+    otp = otp + digits[index];
+  }
+  return otp;
+};
 
 exports.registerController = (req, res) => {
-  const { name, email, password } = req.body;
-  const errors = validationResult(req);
+  const { email } = req.body;
 
-  if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
-    return res.json({ code: 422, msg: firstError });
-  } else {
-    User.findOne({
-      email,
-    }).exec((err, user) => {
-      if (user) {
-        return res.json({ code: 400, msg: "Email is taken" });
-      }
-    });
+  User.findOne({
+    email,
+  }).exec((err, user) => {
+    if (user) {
+      return res.json({ code: 400, msg: "Email is taken" });
+    }
+  });
 
-    const token = jwt.sign(
-      {
-        name,
-        email,
-        password,
-      },
-      process.env.JWT_ACCOUNT_ACTIVATION,
-      {
-        expiresIn: "5m",
-      }
-    );
+  const otp = generateOTP();
 
-    const emailData = {
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: "Account activation link",
-      html: `
-                <h1>Please use the following to activate your account</h1>
-                <p>${process.env.CLIENT_URL}/users/activate/${token}/</p>
+  const emailData = {
+    from: process.env.EMAIL_FROM,
+    to: email,
+    subject: "Account activation link",
+    html: `
+                <h1>Please use the following OTP</h1>
+                <p>${otp}</p>
                 <hr />
-                <p>This email may containe sensetive information</p>
-                <p>${process.env.CLIENT_URL}</p>
             `,
-    };
+  };
 
-    sgMail
-      .send(emailData)
-      .then(sent => {
-        return res.json({
-          msg: `An email has been sent to ${email}. Please check your Email.`,
-        });
-      })
-      .catch(err => {
-        return res.json({
-          code: 400,
-          msg: errorHandler(err),
-        });
+  sgMail
+    .send(emailData)
+    .then(sent => {
+      return res.json({
+        msg: `An OTP has been sent to your ${email}. Please check your Email.`,
+        data: [{ otp, email }],
       });
-  }
+    })
+    .catch(err => {
+      return res.json({
+        code: 400,
+        msg: errorHandler(err),
+      });
+    });
 };
 
 exports.activationController = (req, res) => {
-  const { token } = req.body;
+  const { otp1, opt2, username, email, password } = req.body;
 
-  if (token) {
-    jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
-      if (err) {
-        console.log("Activation error");
-        return res.json({
-          code: 401,
-          msg: "Expired link. Signup again",
-        });
-      } else {
-        const { name, email, password } = jwt.decode(token);
-
-        console.log(email);
-        const user = new User({
-          name,
-          email,
-          password,
-        });
-
-        user.save((err, user) => {
-          if (err) {
-            console.log("Save error", errorHandler(err));
-            return res.json({
-              code: 401,
-              msg: errorHandler(err),
-            });
-          } else {
-            return res.json({
-              code: 200,
-              msg: user,
-            });
-          }
-        });
-      }
+  if (otp1 != opt2) {
+    console.log("Activation error");
+    return res.json({
+      code: 401,
+      msg: "Please enter the correct OTP",
     });
   } else {
-    return res.json({
-      code: 400,
-      msg: "error happening please try again",
+    console.log(email);
+    const user = new User({
+      username,
+      email,
+      password,
+    });
+
+    user.save((err, user) => {
+      if (err) {
+        console.log("Save error", errorHandler(err));
+        return res.json({
+          code: 401,
+          msg: errorHandler(err),
+        });
+      } else {
+        return res.json({
+          code: 200,
+          msg: user,
+        });
+      }
     });
   }
 };

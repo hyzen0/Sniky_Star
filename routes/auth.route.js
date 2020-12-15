@@ -48,9 +48,10 @@ router.post("/googlelogin", googleController);
 router.post("/facebooklogin", facebookController);
 
 router.post("/sendotp", (req, res) => {
+  const { number } = req.body;
   nexmo.verify.request(
     {
-      number: "91" + req.body.number,
+      number: "91" + number,
       brand: "Sniky Star",
       code_length: "4",
     },
@@ -67,6 +68,7 @@ router.post("/sendotp", (req, res) => {
         return res.json({
           code: 200,
           msg: "Sent",
+          data: [{ number }],
         });
       }
     }
@@ -74,10 +76,11 @@ router.post("/sendotp", (req, res) => {
 });
 
 router.post("/verifyOtp", (req, res) => {
+  const { username, number, password, code } = req.body;
   nexmo.verify.check(
     {
       request_id: reqId,
-      code: req.body.code,
+      code: code,
     },
     (err, result) => {
       if (err) {
@@ -88,10 +91,36 @@ router.post("/verifyOtp", (req, res) => {
         });
       } else {
         if (result.status === "0") {
-          Verified = true;
-          return res.json({
-            code: 200,
-            msg: "Verified",
+          User.findOne({
+            number,
+          }).exec((err, user) => {
+            if (user) {
+              return res.json({
+                code: 400,
+                msg: "Number is already Registerd",
+              });
+            } else {
+              const user = new User({
+                username,
+                number,
+                password,
+              });
+              user.save((err, user) => {
+                if (err) {
+                  console.log("Save error", errorHandler(err));
+                  return res.json({
+                    code: 401,
+                    msg: errorHandler(err),
+                  });
+                } else {
+                  return res.json({
+                    code: 200,
+                    msg: "success",
+                    data: [{ user }],
+                  });
+                }
+              });
+            }
           });
         } else {
           res.json({
@@ -102,45 +131,6 @@ router.post("/verifyOtp", (req, res) => {
       }
     }
   );
-});
-
-router.post("/getinfo", (req, res) => {
-  const { name, number, password } = req.body;
-  if (Verified) {
-    User.findOne({
-      number,
-    }).exec((err, user) => {
-      if (user) {
-        return res.json({ code: 400, msg: "Number is already Registerd" });
-      } else {
-        const user = new User({
-          name,
-          number,
-          password,
-        });
-        user.save((err, user) => {
-          if (err) {
-            console.log("Save error", errorHandler(err));
-            return res.json({
-              code: 401,
-              msg: errorHandler(err),
-            });
-          } else {
-            return res.json({
-              code: 200,
-              msg: "success",
-              data: [user],
-            });
-          }
-        });
-      }
-    });
-  } else {
-    return res.json({
-      code: 400,
-      msg: "User is not Verified",
-    });
-  }
 });
 
 module.exports = router;
