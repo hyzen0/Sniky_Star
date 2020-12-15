@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 const crypto = require("crypto");
 // user schema
 const userScheama = new mongoose.Schema(
@@ -31,6 +32,30 @@ const userScheama = new mongoose.Schema(
       data: String,
       default: "",
     },
+    Photo: {
+      type: Buffer,
+    },
+    PhotoType: {
+      type: String,
+    },
+    Followers: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
+    Following: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
+    Bookmarks: [
+      {
+        type: ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   {
     timestamps: true,
