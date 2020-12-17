@@ -53,7 +53,7 @@ router.post("/sendotp", (req, res) => {
     {
       number: "91" + number,
       brand: "Sniky Star",
-      code_length: "4",
+      code_length: "6",
     },
     (err, result) => {
       if (err) {
@@ -76,7 +76,7 @@ router.post("/sendotp", (req, res) => {
 });
 
 router.post("/verifyOtp", (req, res) => {
-  const { username, number, password, code } = req.body;
+  const { code } = req.body;
   nexmo.verify.check(
     {
       request_id: reqId,
@@ -91,36 +91,9 @@ router.post("/verifyOtp", (req, res) => {
         });
       } else {
         if (result.status === "0") {
-          User.findOne({
-            number,
-          }).exec((err, user) => {
-            if (user) {
-              return res.json({
-                code: 400,
-                msg: "Number is already Registerd",
-              });
-            } else {
-              const user = new User({
-                username,
-                number,
-                password,
-              });
-              user.save((err, user) => {
-                if (err) {
-                  console.log("Save error", errorHandler(err));
-                  return res.json({
-                    code: 401,
-                    msg: errorHandler(err),
-                  });
-                } else {
-                  return res.json({
-                    code: 200,
-                    msg: "success",
-                    data: [{ user }],
-                  });
-                }
-              });
-            }
+          return res.json({
+            code: 200,
+            msg: "success",
           });
         } else {
           res.json({
@@ -131,6 +104,31 @@ router.post("/verifyOtp", (req, res) => {
       }
     }
   );
+});
+
+router.post("/registernumber", (req, res) => {
+  const { username, number, password } = req.body;
+  const user = new User({
+    username,
+    number,
+    password,
+  });
+
+  user.save((err, user) => {
+    if (err) {
+      console.log("Save error", errorHandler(err));
+      return res.json({
+        code: 401,
+        msg: errorHandler(err),
+      });
+    } else {
+      return res.json({
+        code: 200,
+        msg: "sucess",
+        data: user,
+      });
+    }
+  });
 });
 
 module.exports = router;

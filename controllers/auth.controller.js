@@ -2,7 +2,9 @@ const User = require("../models/auth.model");
 const _ = require("lodash");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
-
+const { authenticator } = require("otplib");
+const secret = "KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD";
+const token = authenticator.generate(secret);
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
