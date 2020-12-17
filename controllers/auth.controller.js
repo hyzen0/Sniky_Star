@@ -50,6 +50,7 @@ exports.registerController = (req, res) => {
     .send(emailData)
     .then(sent => {
       return res.json({
+        code: 200,
         msg: `An OTP has been sent to your ${email}. Please check your Email.`,
         data: [{ otp, email }],
       });
@@ -214,85 +215,88 @@ exports.adminMiddleware = (req, res, next) => {
 };
 
 exports.forgotPasswordController = (req, res) => {
-  const { email } = req.body;
+  const { email, number } = req.body;
   const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
-    return res.json({
-      code: 422,
-      msg: firstError,
-    });
-  } else {
-    User.findOne(
-      {
-        email,
-      },
-      (err, user) => {
-        if (err || !user) {
-          return res.json({
-            code: 400,
-            msg: "No Account Found. Try Signing Up!",
-          });
-        }
-
-        const token = jwt.sign(
-          {
-            _id: user._id,
-          },
-          process.env.JWT_RESET_PASSWORD,
-          {
-            expiresIn: "10m",
+  if (email) {
+    if (!errors.isEmpty()) {
+      const firstError = errors.array().map(error => error.msg)[0];
+      return res.json({
+        code: 422,
+        msg: firstError,
+      });
+    } else {
+      User.findOne(
+        {
+          email,
+        },
+        (err, user) => {
+          if (err || !user) {
+            return res.json({
+              code: 400,
+              msg: "No Account Found. Try Signing Up!",
+            });
           }
-        );
 
-        const emailData = {
-          from: process.env.EMAIL_FROM,
-          to: email,
-          subject: `Password Reset link`,
-          html: `
+          const token = jwt.sign(
+            {
+              _id: user._id,
+            },
+            process.env.JWT_RESET_PASSWORD,
+            {
+              expiresIn: "10m",
+            }
+          );
+
+          const emailData = {
+            from: process.env.EMAIL_FROM,
+            to: email,
+            subject: `Password Reset link`,
+            html: `
                     <h1>Please use the following link to reset your password</h1>
                     <p>${process.env.CLIENT_URL}/users/password/reset/${token}/</p>
                     <hr />
                     <p>This email may contain sensetive information</p>
                     <p>${process.env.CLIENT_URL}</p>
                 `,
-        };
+          };
 
-        return user.updateOne(
-          {
-            resetPasswordLink: token,
-          },
-          (err, success) => {
-            if (err) {
-              console.log("RESET PASSWORD LINK ERROR", err);
-              return res.json({
-                code: 400,
-                msg:
-                  "Database connection error on user password forgot request.",
-              });
-            } else {
-              sgMail
-                .send(emailData)
-                .then(sent => {
-                  // console.log('SIGNUP EMAIL SENT', sent)
-                  return res.json({
-                    code: 200,
-                    msg: `Password reset link has been sent to ${email}. Follow the instruction to reset your password.`,
-                  });
-                })
-                .catch(err => {
-                  // console.log('SIGNUP EMAIL SENT ERROR', err)
-                  return res.json({
-                    code: 400,
-                    msg: err.message,
-                  });
+          return user.updateOne(
+            {
+              resetPasswordLink: token,
+            },
+            (err, success) => {
+              if (err) {
+                console.log("RESET PASSWORD LINK ERROR", err);
+                return res.json({
+                  code: 400,
+                  msg:
+                    "Database connection error on user password forgot request.",
                 });
+              } else {
+                sgMail
+                  .send(emailData)
+                  .then(sent => {
+                    // console.log('SIGNUP EMAIL SENT', sent)
+                    return res.json({
+                      code: 200,
+                      msg: `Password reset link has been sent to ${email}. Follow the instruction to reset your password.`,
+                    });
+                  })
+                  .catch(err => {
+                    // console.log('SIGNUP EMAIL SENT ERROR', err)
+                    return res.json({
+                      code: 400,
+                      msg: err.message,
+                    });
+                  });
+              }
             }
-          }
-        );
-      }
-    );
+          );
+        }
+      );
+    }
+  }
+  if (number) {
   }
 };
 
