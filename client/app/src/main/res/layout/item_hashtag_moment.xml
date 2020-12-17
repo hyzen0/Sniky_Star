@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/dummy_img" />
+
+            <TextView
+                android:id="@+id/des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ly_1"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+
+
+                android:ellipsize="end"
+                android:fontFamily="@font/segoe_ui_regural"
+                android:maxLength="20"
+                android:maxLines="2"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_1sdp"
+                android:text="#goindiago"
+                android:textColor="@color/exo_white"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ly_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/trans_bottom"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/like_btn"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_5sdp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_star_line" />
+
+                    <TextView
+                        android:id="@+id/likes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:fontFamily="@font/segoe_ui_regural"
+                        android:text="4.4K"
+                        android:textColor="@color/yellow"
+                        android:textSize="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="78dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/download_btn"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_5sdp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_views_line" />
+
+                    <TextView
+                        android:id="@+id/download"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:fontFamily="@font/segoe_ui_regural"
+                        android:text="4.4K"
+                        android:textColor="@color/yellow"
+                        android:textSize="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="78dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/comments_btn"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_5sdp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_comment_line" />
+
+                    <TextView
+                        android:id="@+id/comments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:fontFamily="@font/segoe_ui_regural"
+                        android:text="4.4K"
+                        android:textColor="@color/yellow"
+                        android:textSize="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="78dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

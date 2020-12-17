@@ -1,0 +1,74 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="312dp"
+    android:height="300.618dp"
+    android:viewportWidth="312"
+    android:viewportHeight="300.618">
+  <path
+      android:pathData="M157.016,157.188m-3.42,0a3.42,3.42 0,1 1,6.84 0a3.42,3.42 0,1 1,-6.84 0"
+      android:fillColor="#f2d766"/>
+  <path
+      android:pathData="M-0.004,115.158L119.845,115.158L156.422,0l37.739,115.158L311.996,115.158l-33.527,26.5 -28.548,21.035L209.307,162.693l29.46,-20.758L174.75,141.935L155.996,80.337l-18.751,61.6L33.473,141.937Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startY="175.38304"
+          android:startX="33.38"
+          android:endY="43.113644"
+          android:endX="272.06"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFFFFFF"/>
+        <item android:offset="0.045" android:color="#FFDFDFDF"/>
+        <item android:offset="0.13" android:color="#FFA7A7A7"/>
+        <item android:offset="0.209" android:color="#FF7B7A7C"/>
+        <item android:offset="0.28" android:color="#FF5B5A5C"/>
+        <item android:offset="0.339" android:color="#FF484749"/>
+        <item android:offset="0.38" android:color="#FF414042"/>
+        <item android:offset="0.407" android:color="#FF4C4C4E"/>
+        <item android:offset="0.457" android:color="#FF66676A"/>
+        <item android:offset="0.522" android:color="#FF8C8E91"/>
+        <item android:offset="0.599" android:color="#FFC3C4C6"/>
+        <item android:offset="0.67" android:color="#FFFFFFFF"/>
+        <item android:offset="1" android:color="#FF808285"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M91.468,196.881 L59.596,300.617l96.83,-69.628 97.332,69.628 -33.3,-103.736L193.039,196.881l11.845,37.448 -27.215,-20.4 16.9,-12.2 -1.532,-4.846 -32.47,-0.04 -49.94,34.293 9.006,-34.253Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startY="312.44724"
+          android:startX="66.58583"
+          android:endY="213.86195"
+          android:endX="230.65273"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFFFFFF"/>
+        <item android:offset="0.082" android:color="#FFDFDFDF"/>
+        <item android:offset="0.239" android:color="#FFA7A7A7"/>
+        <item android:offset="0.385" android:color="#FF7B7A7C"/>
+        <item android:offset="0.515" android:color="#FF5B5A5C"/>
+        <item android:offset="0.624" android:color="#FF484749"/>
+        <item android:offset="0.698" android:color="#FF414042"/>
+        <item android:offset="0.727" android:color="#FF4C4C4E"/>
+        <item android:offset="0.778" android:color="#FF66676A"/>
+        <item android:offset="0.846" android:color="#FF8C8E91"/>
+        <item android:offset="0.926" android:color="#FFC3C4C6"/>
+        <item android:offset="1" android:color="#FFFFFFFF"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M55.076,165.481h52.858L107.934,171.042h-36.6l6.748,5.612h25.208a7.8,7.8 0,0 1,5.044 1.6,4.9 4.9,0 0,1 1.994,3.975v5.612a4.887,4.887 0,0 1,-1.941 4.014,7.951 7.951,0 0,1 -5.1,1.545L87.718,193.4l-8.094,-5.559h23.663v-5.612L75.438,182.229c-2.073,-0.013 -19.081,-15.714 -20.362,-16.744"
+      android:fillColor="#ead728"/>
+  <path
+      android:pathData="M148.182,193.382h-4.358l-23.61,-18.156L120.214,193.382h-7.038v-27.9h4.41L141.196,183.642L141.196,165.481h6.972v27.9Z"
+      android:fillColor="#ead728"/>
+  <path
+      android:pathData="M160.568,193.382L153.596,193.382v-27.9h6.972Z"
+      android:fillColor="#ead728"/>
+  <path
+      android:pathData="M201.107,193.382L189.421,193.382l-16.334,-9.217v9.217h-6.972v-27.9h6.972v9.217l16.334,-9.217h11.686l-25.393,13.971Z"
+      android:fillColor="#ead728"/>
+  <path
+      android:pathData="M246.835,165.481 L216.396,186.463l3.262,6.919h-5.718l-4.371,-9.256L199.996,165.481h6.008l8.015,16.519 25.168,-16.519h7.646Z"
+      android:fillColor="#ead728"/>
+</vector>

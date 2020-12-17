@@ -1,0 +1,187 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/all_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+
+
+        <RelativeLayout
+            android:id="@+id/layout_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:visibility="visible">
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:padding="@dimen/_2sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/yellow" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toStartOf="@+id/more_vert_option"
+                android:layout_toEndOf="@id/back_btn"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Udit Sharma"
+                android:textColor="@color/yellow"
+                android:textSize="@dimen/_11sdp"
+                android:transitionName="TranUserName" />
+
+            <ImageButton
+                android:id="@+id/more_vert_option"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="more_option"
+                android:padding="@dimen/_2sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_more_vert"
+                android:tint="@color/grey" />
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/layout_back"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/grey" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/comment_box"
+            android:layout_below="@+id/view_1"
+            android:background="@android:color/transparent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_msg_receive" />
+
+        <RelativeLayout
+            android:id="@+id/comment_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/ic_edit_with_trans_back">
+
+            <ImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignBottom="@id/message_layout"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_moments" />
+
+            <LinearLayout
+                android:id="@+id/message_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/send_btn"
+                android:layout_toEndOf="@+id/user_img"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/photo_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_120sdp"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:id="@+id/main_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_120sdp"
+                        android:src="@color/yellow" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/trans_top"
+                        android:gravity="end">
+
+                        <ImageView
+                            android:id="@+id/remove_photo"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="end"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/ic_close"
+                            app:tint="@color/exo_white" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/comment_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/message_something"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+
+            <ImageButton
+                android:id="@+id/send_btn"
+
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_alignBottom="@id/message_layout"
+                android:layout_alignParentEnd="true"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:adjustViewBounds="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_send_btn" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

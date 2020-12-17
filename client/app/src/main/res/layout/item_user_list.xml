@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@color/exo_black_opacity_70"
+                app:civ_border_color="@color/grey"
+                app:civ_border_width="@dimen/_1sdp"
+                app:civ_circle_background_color="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:fontFamily="@font/segoe_ui_regural"
+                android:text="@string/recent_search"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/add_follow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_button_back"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/btn_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_2sdp"
+                android:background="@drawable/ic_button_back"
+                android:fontFamily="@font/segoe_ui_regural"
+                android:text="+ Follow"
+                android:textAlignment="center"
+                android:textColor="@color/yellow"
+                android:textSize="@dimen/_12sdp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</layout>

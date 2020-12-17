@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#707070</color>
+    <color name="colorPrimaryDark">#101010</color>
+    <color name="colorAccent">#E9D829</color>
+    <color name="yellow">#E9D829</color>
+    <color name="red">#E53935</color>
+    <color name="grey">#707070</color>
+    <color name="dart_trans">#80000000</color>
+    <color name="blacktrans">#EE101010</color>
+    <color name="green">#00FF0B</color>
+
+
+
+
+    <!--Material color list from https://material.io/guidelines/style/color.html-->
+
+    <color name="grey_600">#757575</color>
+
+
+    <!--for random color generator -->
+
+<!--    agoraa-->
+
+    <color name="gray_lightest">#DEDEDE</color>
+    <color name="gray_light">#CCCCCC</color>
+    <color name="gray">#989898</color>
+    <color name="gray_deep_dark">#333333</color>
+
+    <color name="blue">#007AFF</color>
+    <color name="blue_medium">#44A2FC</color>
+    <color name="blue_light">#0ECFFF</color>
+    <color name="blue_alpha">#9CD9FF</color>
+
+    <color name="black_half_transparent">#66000000</color>
+</resources>

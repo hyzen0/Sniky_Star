@@ -1,0 +1,131 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+
+
+    </style>
+
+
+    <style name="edit_text_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:paddingTop">0dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_18sdp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="boxStrokeWidth">@dimen/strok_width</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="hintTextColor">@color/yellow</item>
+    </style>
+
+    <style name="edit_text">
+        <item name="fontFamily">@font/seguisb</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:padding">@dimen/_8sdp</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:includeFontPadding">false</item>
+
+    </style>
+
+    <style name="itemTextStyle.AppTheme" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:fontFamily">@font/seguisb</item>
+    </style>
+
+    <style name="DialogSlideAnim" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#01000000
+        </item> <!-- Or any transparency or color you need -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="select_role_block">
+        <item name="android:background">@drawable/select_role_block_bg</item>
+        <item name="android:layout_width">@dimen/role_block_width</item>
+        <item name="android:layout_height">@dimen/role_block_height</item>
+        <item name="android:layout_marginTop">@dimen/role_block_margin_top</item>
+    </style>
+
+    <style name="select_role_block_icon">
+        <item name="android:layout_width">@dimen/role_block_icon_width</item>
+        <item name="android:layout_height">@dimen/role_block_height</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+
+    <style name="select_role_block_content">
+        <item name="android:layout_width">@dimen/role_block_content_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginRight">@dimen/role_block_content_margin_right</item>
+        <item name="android:layout_marginEnd">@dimen/role_block_content_margin_right</item>
+    </style>
+
+    <style name="select_role_block_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textColor">@color/gray_deep_dark</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="select_role_block_hint">
+        <item name="android:layout_width">@dimen/role_block_content_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray_light</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:layout_marginTop">@dimen/role_block_hint_margin_top</item>
+    </style>
+
+    <style name="select_role_block_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:background">@drawable/ic_arrow_right</item>
+    </style>
+
+
+    <style name="ServiceTextShadow">
+        <item name="android:shadowColor">#55000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">10.0</item>
+    </style>
+
+</resources>

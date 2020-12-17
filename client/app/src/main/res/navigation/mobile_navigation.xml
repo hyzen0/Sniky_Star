@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.joad.sinkystar.Fragment.auth.SplashScreen"
+        android:label="SplashScreen"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashScreen_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+
+        android:id="@+id/loginFragment"
+        android:name="com.joad.sinkystar.Fragment.auth.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.joad.sinkystar.Fragment.auth.SignupFragment"
+        android:label="SignupFragment"
+        tools:layout="@layout/fragment_singup">
+        <action
+            android:id="@+id/action_signupFragment_to_verificationActivity"
+            app:destination="@id/verificationActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationActivity"
+        android:name="com.joad.sinkystar.Fragment.auth.VerificationFragment"
+        android:label="VerificationActivity"
+        tools:layout="@layout/fragment_verification">
+        <action
+            android:id="@+id/action_verificationActivity_to_personalFragment"
+            app:destination="@id/personalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalFragment"
+        android:name="com.joad.sinkystar.Fragment.auth.PersonalFragment"
+        android:label="PersonalFragment"
+        tools:layout="@layout/fragment_personal_details">
+        <action
+            android:id="@+id/action_personalFragment_to_bottom_sheet_add_photo2"
+            app:destination="@id/bottom_sheet_add_photo2" />
+        <action
+            android:id="@+id/action_personalFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/personalFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/bottom_sheet_add_photo2"
+        android:name="com.joad.sinkystar.Fragment.others.Bottom_sheet_add_photo"
+        android:label="Bottom_sheet_add_photo"
+        tools:layout="@layout/bottom_add_photo" />
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.joad.sinkystar.Fragment.home.fragment.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_commentFragment"
+            app:destination="@id/commentFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_bottom_sheet_video_option"
+            app:destination="@id/bottom_sheet_video_option" />
+        <action
+            android:id="@+id/action_mainFragment_to_songFragment"
+            app:destination="@id/songFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+        <action
+            android:id="@+id/action_mainFragment_to_placeFragment"
+            app:destination="@id/placeFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.UserProfileFragment"
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+
+
+        <action
+            android:id="@+id/action_userProfileFragment_to_messageFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_video_user_view_frag"
+            app:destination="@id/video_user_view_frag" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_photo_user_view_frag"
+            app:destination="@id/photo_user_view_frag" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userProfileMoment"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.UserProfileFragment"
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ownProfile"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.ownProfile"
+        android:label="ownProfile"
+        tools:layout="@layout/fragment_own_profile">
+        <action
+            android:id="@+id/action_ownProfile_to_editProfile"
+            app:destination="@id/editProfile" />
+        <action
+            android:id="@+id/action_ownProfile_to_profileSettingFragment"
+            app:destination="@id/profileSettingFragment" />
+        <action
+            android:id="@+id/action_ownProfile_to_savedVideoFragment"
+            app:destination="@id/savedVideoFragment" />
+        <action
+            android:id="@+id/action_ownProfile_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_ownProfile_to_show_own_view_frag"
+            app:destination="@id/video_own_view_frag"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+        <action
+            android:id="@+id/action_ownProfile_to_photo_own_view_frag"
+            app:destination="@id/photo_own_view_frag"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.joad.sinkystar.Fragment.home.fragment.CommentFragment"
+        android:label="CommentFragment"
+        tools:layout="@layout/fragment_comment">
+        <action
+            android:id="@+id/action_commentFragment_to_commentFragment2"
+            app:destination="@id/commentFragment2"
+            app:enterAnim="@anim/animate_slide_left_enter"
+            app:exitAnim="@anim/animate_slide_left_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/commentFragment2"
+        android:name="com.joad.sinkystar.Fragment.home.fragment.CommentFragment2"
+        android:label="CommentFragment2"
+        tools:layout="@layout/fragment_comment2" />
+    <fragment
+        android:id="@+id/momentFragment"
+        android:name="com.joad.sinkystar.Fragment.moment.fragment.MomentFragment"
+        android:label="MomentFragment"
+        tools:layout="@layout/fragment_moment">
+        <action
+            android:id="@+id/action_momentFragment_to_momentDetailsFragment"
+            app:destination="@id/momentDetailsFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+        <action
+            android:id="@+id/action_momentFragment_to_userProfileMoment"
+            app:destination="@id/userProfileMoment" />
+        <action
+            android:id="@+id/action_momentFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_momentFragment_to_bottom_sheet_option"
+            app:destination="@id/bottom_sheet_option" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.joad.sinkystar.Fragment.auth.PersonalFragment"
+        android:label="EditProfile"
+        tools:layout="@layout/fragment_personal_details" />
+    <fragment
+        android:id="@+id/momentDetailsFragment"
+        android:name="com.joad.sinkystar.Fragment.moment.fragment.MomentDetailsFragment"
+        android:label="MomentDetailsFragment"
+        tools:layout="@layout/fragment_moment_details" />
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.joad.sinkystar.Fragment.others.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo" />
+    <fragment
+        android:id="@+id/profileSettingFragment"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.ProfileSettingFragment"
+        android:label="fragment_profile_setting"
+        tools:layout="@layout/fragment_profile_setting" />
+    <fragment
+        android:id="@+id/savedVideoFragment"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.SavedVideoFragment"
+        android:label="SavedVideoFragment"
+        tools:layout="@layout/fragment_saved_video">
+        <action
+            android:id="@+id/action_savedVideoFragment_to_video_saved_view_frag"
+            app:destination="@id/video_saved_view_frag" />
+        <action
+            android:id="@+id/action_savedVideoFragment_to_photo_saved_view_frag"
+            app:destination="@id/photo_saved_view_frag" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.joad.sinkystar.Fragment.profile.fragment.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <dialog
+        android:id="@+id/bottom_sheet_option"
+        android:name="com.joad.sinkystar.Fragment.others.Bottom_sheet_option"
+        android:label="Bottom_sheet_option"
+        tools:layout="@layout/bottom_more_option_sheet">
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/bottom_sheet_video_option"
+        android:name="com.joad.sinkystar.Fragment.others.Bottom_sheet_option"
+        android:label="Bottom_sheet_option"
+        tools:layout="@layout/bottom_more_option_sheet">
+
+    </dialog>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.joad.sinkystar.Fragment.message.fragment.ChatFragment"
+        android:label="chatFragment"
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_messageFragment_to_bottom_sheet_add_photo"
+            app:destination="@id/bottom_sheet_add_photo" />
+    </fragment>
+    <fragment
+        android:id="@+id/video_own_view_frag"
+        android:name="com.joad.sinkystar.Fragment.home.viewPager.followViewPager"
+        android:label="viewpager_follow"
+        tools:layout="@layout/viewpager_follow" />
+
+    <fragment
+        android:id="@+id/photo_own_view_frag"
+        android:name="com.joad.sinkystar.Fragment.others.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo" />
+    <dialog
+        android:id="@+id/bottom_sheet_add_photo"
+        android:name="com.joad.sinkystar.Fragment.others.Bottom_sheet_add_photo"
+        android:label="Bottom_sheet_add_photo"
+        tools:layout="@layout/bottom_add_photo" />
+    <fragment
+        android:id="@+id/photo_user_view_frag"
+        android:name="com.joad.sinkystar.Fragment.others.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo" />
+
+    <fragment
+        android:id="@+id/video_user_view_frag"
+        android:name="com.joad.sinkystar.Fragment.home.viewPager.followViewPager"
+        android:label="viewpager_follow"
+        tools:layout="@layout/viewpager_follow" />
+
+    <fragment
+        android:id="@+id/photo_saved_view_frag"
+        android:name="com.joad.sinkystar.Fragment.others.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo" />
+
+    <fragment
+        android:id="@+id/video_saved_view_frag"
+        android:name="com.joad.sinkystar.Fragment.home.viewPager.followViewPager"
+        android:label="viewpager_follow"
+        tools:layout="@layout/viewpager_follow" />
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.joad.sinkystar.Fragment.message.fragment.MessageFragment"
+        android:label="MessageFragment"
+        tools:layout="@layout/fragment_message">
+        <action
+            android:id="@+id/action_messageFragment_to_chatFragment2"
+            app:destination="@id/chatFragment2"
+            app:enterAnim="@anim/animate_slide_left_enter"
+            app:exitAnim="@anim/animate_slide_left_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.joad.sinkystar.Fragment.message.fragment.ChatFragment"
+        android:label="chatFragment"
+        tools:layout="@layout/fragment_chat">
+
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.joad.sinkystar.Fragment.search.fragment.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_video_user_view_frag"
+            app:destination="@id/video_user_view_frag" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_up_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.joad.sinkystar.Fragment.search.fragment.SearchFragment2"
+        android:label="fragment_search2"
+        tools:layout="@layout/fragment_search2">
+        <action
+            android:id="@+id/action_searchFragment2_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/songFragment"
+        android:name="com.joad.sinkystar.Fragment.home.fragment.SongFragment"
+        android:label="SongFragment"
+        tools:layout="@layout/fragment_song">
+        <action
+            android:id="@+id/action_songFragment_to_video_song_view_frag"
+            app:destination="@id/video_song_view_frag" />
+    </fragment>
+    <fragment
+        android:id="@+id/video_song_view_frag"
+        android:name="com.joad.sinkystar.Fragment.home.viewPager.followViewPager"
+        android:label="viewpager_follow"
+        tools:layout="@layout/viewpager_follow" />
+    <fragment
+        android:id="@+id/placeFragment"
+        android:name="com.joad.sinkystar.Fragment.home.fragment.placeFragment"
+        android:label="placeFragment"
+        tools:layout="@layout/fragment_place" />
+
+    <fragment
+        android:id="@+id/liveFragment"
+        android:name="com.joad.sinkystar.Fragment.live.LiveFragment"
+        android:label="fragment_live"
+        tools:layout="@layout/fragment_live" />
+
+</navigation>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@id/exo_play"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_play_button" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/exo_pause"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+
+    </RelativeLayout>
+
+
+    <com.google.android.exoplayer2.ui.DefaultTimeBar
+        android:id="@+id/exo_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="-10dp"
+        android:layout_marginTop="-12dp"
+        app:ad_marker_color="@android:color/transparent"
+        app:bar_height="@dimen/_3sdp"
+        app:buffered_color="@color/grey"
+        app:played_color="@color/yellow"
+        app:scrubber_color="@android:color/transparent" />
+
+
+    <RelativeLayout
+        android:weightSum="2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:background="@drawable/ripple_right"
+            android:layout_alignParentStart="true"
+            android:id="@+id/exo_rew"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_200sdp"/>
+
+        <ImageButton
+            android:background="@drawable/ripple_left"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/exo_ffwd"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_200sdp"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
