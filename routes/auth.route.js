@@ -28,7 +28,7 @@ const {
   resetPasswordValidator,
 } = require("../helpers/valid");
 
-router.post("/register", validSign, registerController);
+router.post("/register", registerController);
 
 router.post("/login", signinController);
 
@@ -125,7 +125,7 @@ router.post("/registernumber", (req, res) => {
       return res.json({
         code: 200,
         msg: "sucess",
-        data: user,
+        data: [user],
       });
     }
   });

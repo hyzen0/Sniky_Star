@@ -63,13 +63,13 @@ exports.registerController = (req, res) => {
 };
 
 exports.activationController = (req, res) => {
-  const { otp1, opt2, username, email, password } = req.body;
+  const { otp1, otp2, username, email, password } = req.body;
 
-  if (otp1 != opt2) {
+  if (otp1 !== otp2) {
     console.log("Activation error");
     return res.json({
       code: 401,
-      msg: "Please enter the correct OTP",
+      msg: "Incorect OTP",
     });
   } else {
     console.log(email);
@@ -89,7 +89,8 @@ exports.activationController = (req, res) => {
       } else {
         return res.json({
           code: 200,
-          msg: user,
+          msg: "sucess",
+          data: [user],
         });
       }
     });
