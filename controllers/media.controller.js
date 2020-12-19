@@ -1,6 +1,6 @@
 import Media from "../models/media.model";
 import extend from "lodash/extend";
-import errorHandler from "./../helpers/dbErrorHandler";
+import errorHandler from "../helpers/dbErrorHandling";
 import formidable from "formidable";
 import fs from "fs";
 
