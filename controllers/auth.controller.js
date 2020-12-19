@@ -21,6 +21,12 @@ const generateOTP = () => {
   }
   return otp;
 };
+const Vonage = require("@vonage/server-sdk");
+
+const vonage = new Vonage({
+  apiKey: "a54a75f4",
+  apiSecret: "KqTuwzPkj9WmM9Ct",
+});
 
 exports.registerController = (req, res) => {
   const { email } = req.body;
@@ -297,6 +303,75 @@ exports.forgotPasswordController = (req, res) => {
     }
   }
   if (number) {
+    if (!errors.isEmpty()) {
+      const firstError = errors.array().map(error => error.msg)[0];
+      return res.json({
+        code: 422,
+        msg: firstError,
+      });
+    } else {
+      User.findOne(
+        {
+          number,
+        },
+        (err, user) => {
+          if (err || !user) {
+            return res.json({
+              code: 400,
+              msg: "No Account Found. Try Signing Up!",
+            });
+          }
+
+          const token = jwt.sign(
+            {
+              _id: user._id,
+            },
+            process.env.JWT_RESET_PASSWORD,
+            {
+              expiresIn: "10m",
+            }
+          );
+
+          const text = `${process.env.CLIENT_URL}/users/password/reset/${token}`;
+          const brand = "Sniky Star";
+
+          return user.updateOne(
+            {
+              resetPasswordLink: token,
+            },
+            (err, success) => {
+              if (err) {
+                console.log("RESET PASSWORD LINK ERROR", err);
+                return res.json({
+                  code: 400,
+                  msg:
+                    "Database connection error on user password forgot request.",
+                });
+              } else {
+                vonage.message.sendSms(
+                  brand,
+                  number,
+                  text,
+                  (err, responseData) => {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      if (responseData.messages[0]["status"] === "0") {
+                        return console.log("Message sent successfully.");
+                      } else {
+                        return console.log(
+                          `Message failed with error: ${responseData.messages[0]["error-text"]}`
+                        );
+                      }
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      );
+    }
   }
 };
 

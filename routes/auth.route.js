@@ -21,12 +21,7 @@ const {
   facebookController,
 } = require("../controllers/auth.controller");
 
-const {
-  validSign,
-  validLogin,
-  forgotPasswordValidator,
-  resetPasswordValidator,
-} = require("../helpers/valid");
+const { resetPasswordValidator } = require("../helpers/valid");
 
 router.post("/register", registerController);
 
@@ -35,11 +30,7 @@ router.post("/login", signinController);
 router.post("/activation", activationController);
 
 // forgot reset password
-router.put(
-  "/forgotpassword",
-  forgotPasswordValidator,
-  forgotPasswordController
-);
+router.put("/forgotpassword", forgotPasswordController);
 
 router.put("/resetpassword", resetPasswordValidator, resetPasswordController);
 
