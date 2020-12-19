@@ -1,4 +1,4 @@
-const User = require("../models/profile.model");
+const User = require("../models/auth.model");
 
 exports.readController = (req, res) => {
   const userId = req.params.id;
