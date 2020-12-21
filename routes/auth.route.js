@@ -8,7 +8,6 @@ const nexmo = new Nexmo({
   apiSecret: "KqTuwzPkj9WmM9Ct",
 });
 let reqId;
-let Verified = false;
 
 // Load Controllers
 const {
