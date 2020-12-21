@@ -1,9 +1,8 @@
 const User = require("../models/auth.model");
 const extend = require("lodash/extend");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const { errorHandler } = require("../helpers/dbErrorHandling");
 const formidable = require("formidable");
 const fs = require("fs");
-const profileImage = require("../images/profile-pic.png");
 
 exports.create = async (req, res) => {
   const user = new User(req.body);
@@ -106,7 +105,7 @@ exports.photo = (req, res, next) => {
 };
 
 exports.defaultPhoto = (req, res) => {
-  return res.sendFile(process.cwd() + profileImage);
+  return res.sendFile(process.cwd());
 };
 
 exports.addFollowing = async (req, res, next) => {

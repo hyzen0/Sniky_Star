@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 const authRouter = require("./routes/auth.route");
 const userRouter = require("./routes/user.route");
 const mediaRouter = require("./routes/media.route");
+const postRouter = require("./routes/post.route");
 
 // Dev Logginf Middleware
 if (process.env.NODE_ENV === "development") {
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", mediaRouter);
+app.use("/api", postRouter);
 
 app.use((req, res) => {
   res.status(404).json({

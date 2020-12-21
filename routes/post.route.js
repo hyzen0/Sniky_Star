@@ -1,21 +1,20 @@
 const express = require("express");
+const router = express.Router();
 const { userByID } = require("../controllers/user.controller");
 const { requireSignin } = require("../controllers/auth.controller");
 const {
-  create,
-  photo,
   listByUser,
   listNewsFeed,
+  create,
+  postByID,
+  remove,
+  photo,
   like,
   unlike,
   comment,
   uncomment,
-  remove,
-  postByID,
   isPoster,
 } = require("../controllers/post.controller");
-
-const router = express.Router();
 
 router.route("/posts/new/:userId").post(requireSignin, create);
 
@@ -36,4 +35,4 @@ router.route("/posts/:postId").delete(requireSignin, isPoster, remove);
 router.param("userId", userByID);
 router.param("postId", postByID);
 
-moudle.exports = router;
+module.exports = router;

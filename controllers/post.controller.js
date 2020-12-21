@@ -1,5 +1,5 @@
 const Post = require("../models/post.model");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const { errorHandler } = require("../helpers/dbErrorHandling");
 const formidable = "formidable";
 const fs = require("fs");
 
