@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const MediaSchema = new mongoose.Schema({
+const { ObjectId } = mongoose.Schema.Types;
+
+const mediaSchema = new mongoose.Schema({
   title: {
     type: String,
     required: "title is required",
@@ -7,7 +9,7 @@ const MediaSchema = new mongoose.Schema({
   description: String,
   genre: String,
   views: { type: Number, default: 0 },
-  postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
+  postedBy: { type: ObjectId, ref: "User" },
   created: {
     type: Date,
     default: Date.now,
@@ -17,4 +19,4 @@ const MediaSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Media", MediaSchema);
+module.exports = mongoose.model("Media", mediaSchema);
