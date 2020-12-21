@@ -1,18 +1,18 @@
-import Media from "../models/media.model";
-import extend from "lodash/extend";
-import errorHandler from "../helpers/dbErrorHandling";
-import formidable from "formidable";
-import fs from "fs";
+const Media = require("../models/media.model");
+const extend = require("lodash/extend");
+const errorHandler = require("../helpers/dbErrorHandling");
+const formidable = require("formidable");
+const fs = require("fs");
 
 //media streaming
 
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 let gridfs = null;
 mongoose.connection.on("connected", () => {
   gridfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
 });
 
-const create = (req, res) => {
+exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, async (err, fields, files) => {
@@ -40,7 +40,7 @@ const create = (req, res) => {
   });
 };
 
-const mediaByID = async (req, res, next, id) => {
+exports.mediaByID = async (req, res, next, id) => {
   try {
     let media = await Media.findById(id)
       .populate("postedBy", "_id name")
@@ -65,7 +65,7 @@ const mediaByID = async (req, res, next, id) => {
   }
 };
 
-const video = (req, res) => {
+exports.video = (req, res) => {
   const range = req.headers["range"];
   if (range && typeof range === "string") {
     const parts = range.replace(/bytes=/, "").split("-");
@@ -109,7 +109,7 @@ const video = (req, res) => {
   }
 };
 
-const listPopular = async (req, res) => {
+exports.listPopular = async (req, res) => {
   try {
     let media = await Media.find({})
       .limit(9)
@@ -124,7 +124,7 @@ const listPopular = async (req, res) => {
   }
 };
 
-const listByUser = async (req, res) => {
+exports.listByUser = async (req, res) => {
   try {
     let media = await Media.find({ postedBy: req.profile._id })
       .populate("postedBy", "_id name")
@@ -138,11 +138,11 @@ const listByUser = async (req, res) => {
   }
 };
 
-const read = (req, res) => {
+exports.read = (req, res) => {
   return res.json(req.media);
 };
 
-const incrementViews = async (req, res, next) => {
+exports.incrementViews = async (req, res, next) => {
   try {
     await Media.findByIdAndUpdate(
       req.media._id,
@@ -157,7 +157,7 @@ const incrementViews = async (req, res, next) => {
   }
 };
 
-const update = async (req, res) => {
+exports.update = async (req, res) => {
   try {
     let media = req.media;
     media = extend(media, req.body);
@@ -171,7 +171,7 @@ const update = async (req, res) => {
   }
 };
 
-const isPoster = (req, res, next) => {
+exports.isPoster = (req, res, next) => {
   let isPoster =
     req.media && req.auth && req.media.postedBy._id == req.auth._id;
   if (!isPoster) {
@@ -182,7 +182,7 @@ const isPoster = (req, res, next) => {
   next();
 };
 
-const remove = async (req, res) => {
+exports.remove = async (req, res) => {
   try {
     let media = req.media;
     let deletedMedia = await media.remove();
@@ -195,7 +195,7 @@ const remove = async (req, res) => {
   }
 };
 
-const listRelated = async (req, res) => {
+exports.listRelated = async (req, res) => {
   try {
     let media = await Media.find({
       _id: { $ne: req.media },
@@ -211,18 +211,4 @@ const listRelated = async (req, res) => {
       error: errorHandler.getErrorMessage(err),
     });
   }
-};
-
-export default {
-  create,
-  mediaByID,
-  video,
-  listPopular,
-  listByUser,
-  read,
-  incrementViews,
-  update,
-  isPoster,
-  remove,
-  listRelated,
 };
