@@ -1,5 +1,5 @@
 const express = require("express");
-const { userCtrl } = require("../controllers/user.controller");
+const { userByID } = require("../controllers/user.controller");
 const { requireSignin } = require("../controllers/auth.controller");
 const {
   create,
@@ -8,27 +8,32 @@ const {
   listRelated,
   listByUser,
   read,
+  mediaByID,
+  remove,
+  isPoster,
+  update,
+  incrementViews,
 } = require("../controllers/media.controller");
 
 const router = express.Router();
 
-router.route("/api/media/new/:userId").post(requireSignin, create);
+router.post("/media/new/:userId", requireSignin, create);
 
-router.route("/api/media/video/:mediaId").get(mediaCtrl.video);
+router.get("/media/video/:mediaId", video);
 
-router.route("/api/media/popular").get(mediaCtrl.listPopular);
+router.get("/media/popular", listPopular);
 
-router.route("/api/media/related/:mediaId").get(mediaCtrl.listRelated);
+router.get("/media/related/:mediaId", listRelated);
 
-router.route("/api/media/by/:userId").get(mediaCtrl.listByUser);
+router.get("/media/by/:userId", listByUser);
 
 router
-  .route("/api/media/:mediaId")
-  .get(mediaCtrl.incrementViews, mediaCtrl.read)
-  .put(authCtrl.requireSignin, mediaCtrl.isPoster, mediaCtrl.update)
-  .delete(authCtrl.requireSignin, mediaCtrl.isPoster, mediaCtrl.remove);
+  .route("/media/:mediaId")
+  .get(incrementViews, read)
+  .put(requireSignin, isPoster, update)
+  .delete(requireSignin, isPoster, remove);
 
-router.param("userId", userCtrl.userByID);
-router.param("mediaId", mediaCtrl.mediaByID);
+router.param("userId", userByID);
+router.param("mediaId", mediaByID);
 
 module.exports = router;

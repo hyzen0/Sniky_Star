@@ -8,8 +8,14 @@ const mediaSchema = new mongoose.Schema({
   },
   description: String,
   genre: String,
-  views: { type: Number, default: 0 },
-  postedBy: { type: ObjectId, ref: "User" },
+  views: {
+    type: Number,
+    default: 0,
+  },
+  postedBy: {
+    type: ObjectId,
+    ref: "User",
+  },
   created: {
     type: Date,
     default: Date.now,
