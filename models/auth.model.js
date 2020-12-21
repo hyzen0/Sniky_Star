@@ -35,30 +35,16 @@ const userScheama = new mongoose.Schema(
       data: String,
       default: "",
     },
-    Photo: {
-      type: Buffer,
-    },
-    PhotoType: {
+    about: {
       type: String,
+      trim: true,
     },
-    Followers: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
-    Following: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
-    Bookmarks: [
-      {
-        type: ObjectId,
-        ref: "Post",
-      },
-    ],
+    photo: {
+      data: Buffer,
+      contentType: String,
+    },
+    following: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+    followers: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

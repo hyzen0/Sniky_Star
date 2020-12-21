@@ -1,4 +1,9 @@
 const User = require("../models/auth.model");
+const extend = require("lodash/extend");
+const { errorHandler } = require("../helpers/dbErrorHandler");
+const formidable = require("formidable");
+const fs = require("fs");
+const profileImage = require("../images/profile-pic.png");
 
 exports.readController = (req, res) => {
   const userId = req.params.id;
@@ -15,44 +20,31 @@ exports.readController = (req, res) => {
 };
 
 exports.updateController = (req, res) => {
-  // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-  const { username, password } = req.body;
-
-  User.findOne({ _id: req.user._id }, (err, user) => {
-    if (err || !user) {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
       return res.status(400).json({
-        error: "User not found",
+        error: "Photo could not be uploaded",
       });
     }
-    if (!username) {
+    let user = req.profile;
+    user = extend(user, fields);
+    user.updated = Date.now();
+    if (files.photo) {
+      user.photo.data = fs.readFileSync(files.photo.path);
+      user.photo.contentType = files.photo.type;
+    }
+    try {
+      await user.save();
+      user.hashed_password = undefined;
+      user.salt = undefined;
+      res.json(user);
+    } catch (err) {
       return res.status(400).json({
-        error: "username is required",
+        error: errorHandler.getErrorMessage(err),
       });
-    } else {
-      user.username = username;
     }
-
-    if (password) {
-      if (password.length < 6) {
-        return res.status(400).json({
-          error: "Password should be min 6 characters long",
-        });
-      } else {
-        user.password = password;
-      }
-    }
-
-    user.save((err, updatedUser) => {
-      if (err) {
-        console.log("USER UPDATE ERROR", err);
-        return res.status(400).json({
-          error: "User update failed",
-        });
-      }
-      updatedUser.hashed_password = undefined;
-      updatedUser.salt = undefined;
-      res.json(updatedUser);
-    });
   });
 };
 
@@ -68,6 +60,96 @@ exports.userByID = async (req, res, next, id) => {
   } catch (err) {
     return res.status("400").json({
       error: "Could not retrieve user",
+    });
+  }
+};
+
+exports.photo = (req, res, next) => {
+  if (req.profile.photo.data) {
+    res.set("Content-Type", req.profile.photo.contentType);
+    return res.send(req.profile.photo.data);
+  }
+  next();
+};
+
+exports.defaultPhoto = (req, res) => {
+  return res.sendFile(process.cwd() + profileImage);
+};
+
+exports.addFollowing = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.body.userId, {
+      $push: { following: req.body.followId },
+    });
+    next();
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+exports.addFollower = async (req, res) => {
+  try {
+    let result = await User.findByIdAndUpdate(
+      req.body.followId,
+      { $push: { followers: req.body.userId } },
+      { new: true }
+    )
+      .populate("following", "_id name")
+      .populate("followers", "_id name")
+      .exec();
+    result.hashed_password = undefined;
+    result.salt = undefined;
+    res.json(result);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+exports.removeFollowing = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.body.userId, {
+      $pull: { following: req.body.unfollowId },
+    });
+    next();
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+exports.removeFollower = async (req, res) => {
+  try {
+    let result = await User.findByIdAndUpdate(
+      req.body.unfollowId,
+      { $pull: { followers: req.body.userId } },
+      { new: true }
+    )
+      .populate("following", "_id name")
+      .populate("followers", "_id name")
+      .exec();
+    result.hashed_password = undefined;
+    result.salt = undefined;
+    res.json(result);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+exports.findPeople = async (req, res) => {
+  let following = req.profile.following;
+  following.push(req.profile._id);
+  try {
+    let users = await User.find({ _id: { $nin: following } }).select("name");
+    res.json(users);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
     });
   }
 };

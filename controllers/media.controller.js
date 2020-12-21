@@ -1,6 +1,6 @@
 const Media = require("../models/media.model");
 const extend = require("lodash/extend");
-const errorHandler = require("../helpers/dbErrorHandling");
+const { errorHandler } = require("../helpers/dbErrorHandling");
 const formidable = require("formidable");
 const fs = require("fs");
 
