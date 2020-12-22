@@ -197,6 +197,16 @@ exports.requireSignin = expressJwt({
   algorithms: ["HS256"],
 });
 
+exports.hasAuthorization = (req, res, next) => {
+  const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
+  if (!authorized) {
+    return res.status("403").json({
+      error: "User is not authorized",
+    });
+  }
+  next();
+};
+
 exports.adminMiddleware = (req, res, next) => {
   User.findById({
     _id: req.user._id,
