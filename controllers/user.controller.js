@@ -4,20 +4,6 @@ const { errorHandler } = require("../helpers/dbErrorHandling");
 const formidable = require("formidable");
 const fs = require("fs");
 
-exports.create = async (req, res) => {
-  const user = new User(req.body);
-  try {
-    await user.save();
-    return res.status(200).json({
-      message: "Successfully signed up!",
-    });
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
-    });
-  }
-};
-
 //Load user and append to req.
 
 exports.userByID = async (req, res, next, id) => {

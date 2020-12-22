@@ -1,6 +1,5 @@
 const express = require("express");
 const {
-  create,
   userByID,
   read,
   list,
@@ -21,7 +20,7 @@ const {
 
 const router = express.Router();
 
-router.route("/users").get(list).post(create);
+router.route("/users").get(list);
 
 router.route("/users/photo/:userId").get(photo, defaultPhoto);
 router.route("/users/defaultphoto").get(defaultPhoto);
