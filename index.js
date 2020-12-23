@@ -22,7 +22,7 @@ const userRouter = require("./routes/user.route");
 const mediaRouter = require("./routes/media.route");
 const postRouter = require("./routes/post.route");
 
-// Dev Logginf Middleware
+// Dev Logging Middleware
 if (process.env.NODE_ENV === "development") {
   app.use(
     cors({
