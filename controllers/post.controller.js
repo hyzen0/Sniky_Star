@@ -23,7 +23,7 @@ exports.create = (req, res, next) => {
       res.json(result);
     } catch (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
+        error: errorHandler(err),
       });
     }
   });
@@ -55,7 +55,7 @@ exports.listByUser = async (req, res) => {
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -72,7 +72,7 @@ exports.listNewsFeed = async (req, res) => {
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -84,7 +84,7 @@ exports.remove = async (req, res) => {
     res.json(deletedPost);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -104,7 +104,7 @@ exports.like = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -119,7 +119,7 @@ exports.unlike = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -139,7 +139,7 @@ exports.comment = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -157,7 +157,7 @@ exports.uncomment = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };

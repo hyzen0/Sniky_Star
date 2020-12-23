@@ -73,13 +73,11 @@ exports.activationController = (req, res) => {
   const { otp1, otp2, username, email, password } = req.body;
 
   if (otp1 !== otp2) {
-    console.log("Activation error");
     return res.json({
       code: 401,
       msg: "Incorect OTP",
     });
   } else {
-    console.log(email);
     const user = new User({
       username,
       email,

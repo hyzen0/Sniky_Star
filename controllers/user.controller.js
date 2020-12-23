@@ -34,7 +34,7 @@ exports.list = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -62,7 +62,7 @@ exports.update = (req, res) => {
       res.json(user);
     } catch (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
+        error: errorHandler(err),
       });
     }
   });
@@ -77,7 +77,7 @@ exports.remove = async (req, res) => {
     res.json(deletedUser);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -102,7 +102,7 @@ exports.addFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -122,7 +122,7 @@ exports.addFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -135,7 +135,7 @@ exports.removeFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -154,7 +154,7 @@ exports.removeFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -167,7 +167,7 @@ exports.findPeople = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };

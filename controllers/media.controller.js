@@ -34,7 +34,7 @@ exports.create = (req, res) => {
       res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
+        error: errorHandler(err),
       });
     }
   });
@@ -119,7 +119,7 @@ exports.listPopular = async (req, res) => {
     res.json(media);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -133,7 +133,7 @@ exports.listByUser = async (req, res) => {
     res.json(media);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -152,7 +152,7 @@ exports.incrementViews = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -166,7 +166,7 @@ exports.update = async (req, res) => {
     res.json(media);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -190,7 +190,7 @@ exports.remove = async (req, res) => {
     res.json(deletedMedia);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
@@ -208,7 +208,7 @@ exports.listRelated = async (req, res) => {
     res.json(media);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler(err),
     });
   }
 };
